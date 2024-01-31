@@ -4,6 +4,14 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 from selenium.webdriver.chrome.options import Options
+from datetime import datetime
+import os
+import sys
+# export the file into same folder as executable
+path_for_app = os.path.dirname(sys.executable)
+#using the curr date as filename for the news extracted
+current_time = datetime.now()
+mdy = current_time.strftime("%m%d%y")
 
 news_site = "https://www.healthline.com/health-news"
 #path = "C:/Users/ROHAN/Downloads/chrome-win64/chrome-win64"
@@ -28,9 +36,10 @@ for barrel in barrels:
     subs.append(SUB)
     links.append(ARTICLE_LINK)
 
-
+name_file = f'news-{mdy}.csv'
 compile_dict = {'headline': headlines, 'sub': subs, 'full_link': links}
 news_headings = pd.DataFrame(compile_dict)
-news_headings.to_csv('news.csv')
+final = os.path.join(path_for_app, name_file)
+news_headings.to_csv(final)
 
 driver.quit()
