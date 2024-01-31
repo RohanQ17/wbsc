@@ -7,9 +7,12 @@ from selenium.webdriver.chrome.options import Options
 
 news_site = "https://www.healthline.com/health-news"
 #path = "C:/Users/ROHAN/Downloads/chrome-win64/chrome-win64"
-
 #serv = Service(executable_path=path)
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+# to scrape without opening chrome driver , we will use headless mode
+h_options = Options()
+h_options.add_argument("--headless=new")
+
+driver = webdriver.Chrome(options=h_options, service=ChromeService(ChromeDriverManager().install()))
 driver.get(news_site)
 
 barrels = driver.find_elements(by="xpath", value='//div[@class="css-8atqhb"]')
@@ -18,12 +21,12 @@ headlines = []
 subs = []
 links = []
 for barrel in barrels:
-    headline = barrel.find_element(by="xpath", value='./a/h2').text
-    sub = barrel.find_element(by="xpath", value='./p/a').text
-    full_link = barrel.find_element(by="xpath", value='./a').get_attribute("href")
-    headlines.append(headline)
-    subs.append(sub)
-    links.append(full_link)
+    HEADLINE = barrel.find_element(by="xpath", value='./a/h2').text
+    SUB = barrel.find_element(by="xpath", value='./p/a').text
+    ARTICLE_LINK = barrel.find_element(by="xpath", value='./a').get_attribute("href")
+    headlines.append(HEADLINE)
+    subs.append(SUB)
+    links.append(ARTICLE_LINK)
 
 
 compile_dict = {'headline': headlines, 'sub': subs, 'full_link': links}
