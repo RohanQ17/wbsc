@@ -65,7 +65,7 @@ driver.quit()
 
 # Define email sender and receiver
 email_sender = 'autorelay17@gmail.com'
-email_password = 'dzharbhxgttaiyhy'
+email_password = 'password'
 receiver = input(str("please enter your email address: "))
 email_receiver = receiver
 
